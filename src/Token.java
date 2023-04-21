@@ -10,15 +10,18 @@ public class Token {
 
     // Constructor privat. Evita que es puguin construir objectes Token externament
     private Token() {
+
     }
 
     // Torna un token de tipus "NUMBER"
     static Token tokNumber(int value) {
-        return null;
+        Token t = Token.tokNumber(value);
+        return t;
     }
 
     // Torna un token de tipus "OP"
     static Token tokOp(char c) {
+
         return null;
     }
 
