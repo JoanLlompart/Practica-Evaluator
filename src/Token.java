@@ -32,29 +32,44 @@ public class Token {
 
     // Torna un token de tipus "NUMBER"
     static Token tokNumber(int value) {
-        Token t = Token.tokNumber(value);
+        Token t = new Token();
+        t.ttype = Toktype.NUMBER;
+        t.value = value;
         return t;
     }
 
     // Torna un token de tipus "OP"
     static Token tokOp(char c) {
         //Toktype op = Token.tokOp(c);
-        return new Token(tokOp());
+        //return new Token(Toktype.OP,Character.toString(c));
+        Token t = new Token();
+        t.ttype = Toktype.OP;
+        t.tk = c;
+        return t;
     }
 
     // Torna un token de tipus "PAREN"
     static Token tokParen(char c) {
-        return null;
+        Token t = new Token();
+        t.ttype = Toktype.OP;
+        t.tk = c;
+        return t;
     }
 
     // Mostra un token (conversió a String)
     public String toString() {
-        return "";
+        if (ttype == Toktype.NUMBER) return String.valueOf(value);
+        return String.valueOf(tk);
     }
 
     // Mètode equals. Comprova si dos objectes Token són iguals
     public boolean equals(Object o) {
-
+        if (o instanceof Token) {
+            //Lo guardamos en token other
+            Token other = (Token) o;
+            //Y devolvemos true si todos los atributos son iguales
+            return this.ttype == other.ttype && this.value == other.value && this.tk == other.tk;
+        }
         return false;
     }
 
@@ -82,6 +97,7 @@ public class Token {
                 // Una vegada tenim tots els Digits consecutius  els pasam a TokNumber i
                 // despres ficar a una posicio de el ArrayList
                number += c;
+                // Token de tipo número
                tokens.add(Token.tokNumber(Integer.parseInt(number)));
             }else if (c == '(' || c ==')') {
                 number = "";
