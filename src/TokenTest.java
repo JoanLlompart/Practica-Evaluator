@@ -10,8 +10,9 @@ public class TokenTest {
 
         expr = "1+311";
         expected = new Token[]{Token.tokNumber(1), Token.tokOp('+'), Token.tokNumber(311)};
-        assertArrayEquals(expected, Token.getTokens(expr));
-
+        //assertArrayEquals(expected, Token.getTokens(expr));
+        Token[] actual = Token.getTokens(expr);
+        assertArrayEquals(expected, actual);
         expr = "((4/5)-6*(36+7))";
         expected = new Token[]{
                 Token.tokParen('('), Token.tokParen('('), Token.tokNumber(4), Token.tokOp('/'),

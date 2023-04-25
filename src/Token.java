@@ -76,13 +76,6 @@ public class Token {
     // A partir d'un String, torna una llista de tokens
     public static Token[] getTokens(String expr) {
         ArrayList<Token> tokens = new ArrayList<>();
-        /*
-        for (int i = 0; i < expr.length(); i++) {
-            char c = expr.charAt(i);
-            if (Character.isDigit(c)) {
-                //si es un numeero etrara
-            }
-         */
 
         String number = "";
 
@@ -91,15 +84,36 @@ public class Token {
             //int asciiValue = (int) c;
             boolean caracter = Character.isDigit(c);
             System.out.println(caracter);
+            //Reiniciam la variable number per poder guardar el proxim nombre sencer
+            number = "";
 
             if (caracter) {
                 // SI es un DIGIT juntar concatenar a un String temporal,
                 // Una vegada tenim tots els Digits consecutius  els pasam a TokNumber i
                 // despres ficar a una posicio de el ArrayList
-               number += c;
+                String[] arTemp = afegirNumeros(caracter,i, number, c, expr);
+                i = Integer.parseInt(arTemp[1]);
+                number = arTemp[0];
+                //Anteriorment a la funcio afegirNumeros li hem incrementat per mirar la seguent
+                //posicio i ara li decrementam, per no saltar caracters.
+                i--;
+                /*int numIndex = expr.charAt(i+1);
+                boolean carTemp = Character.isDigit(numIndex);
+                if (!carTemp) {
+                    tokens.add(Token.tokNumber(Integer.parseInt(number)));
+                    number = "";
+                }else {
+                    number += c;
+                    // Token de tipo número
+                    tokens.add(Token.tokNumber(Integer.parseInt(number)));
+                }
+
+                 */
+                //number += c;
                 // Token de tipo número
-               tokens.add(Token.tokNumber(Integer.parseInt(number)));
-            }else if (c == '(' || c ==')') {
+                tokens.add(Token.tokNumber(Integer.parseInt(number)));
+
+            } else if (c == '(' || c == ')') {
                 number = "";
                 //guardaDigits(number,tokens);
                 tokens.add(tokParen(c));
@@ -113,6 +127,23 @@ public class Token {
 
         }
         return tokens.toArray(tokens.toArray(new Token[tokens.size()]));
+    }
+
+    private static String[] afegirNumeros(boolean caracter, int i, String number, char c, String expr) {
+        //Menter caracter sigui True continua iterant el bucle.
+        while (caracter) {
+            //Afegim el caracter.
+            number += c;
+            //Increment de i per mirar si el següent number char es un digit.
+            i++;
+            if (i <expr.length()) {
+                c =expr.charAt(i);
+            } else {
+                //Sortida de el bucle
+                break;
+            }
+        }
+        return new String[]{number,String.valueOf(i)};
     }
 
     private static void guardaDigits(String number, ArrayList<Token> tokens) {
