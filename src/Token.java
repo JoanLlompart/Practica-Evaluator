@@ -85,18 +85,26 @@ public class Token {
             boolean caracter = Character.isDigit(c);
             System.out.println(caracter);
             //Reiniciam la variable number per poder guardar el proxim nombre sencer
-            number = "";
+           // number = "";
 
             if (caracter) {
                 // SI es un DIGIT juntar concatenar a un String temporal,
                 // Una vegada tenim tots els Digits consecutius  els pasam a TokNumber i
                 // despres ficar a una posicio de el ArrayList
+
+                /*
                 String[] arTemp = afegirNumeros(caracter,i, number, c, expr);
                 i = Integer.parseInt(arTemp[1]);
                 number = arTemp[0];
+
+                 */
                 //Anteriorment a la funcio afegirNumeros li hem incrementat per mirar la seguent
                 //posicio i ara li decrementam, per no saltar caracters.
-                i--;
+                //i--;
+
+
+
+
                 /*int numIndex = expr.charAt(i+1);
                 boolean carTemp = Character.isDigit(numIndex);
                 if (!carTemp) {
@@ -108,9 +116,22 @@ public class Token {
                     tokens.add(Token.tokNumber(Integer.parseInt(number)));
                 }
 
+
+                number += c;
+
                  */
-                //number += c;
+
+
+                //Menter caracter sigui True continua iterant el bucle.
                 // Token de tipo número
+                int start = i;
+                while (i < expr.length() && Character.isDigit(expr.charAt(i))) {
+                    i++;
+                }
+                int end = i;
+                number = expr.substring(start, end);
+                // Token de tipo número
+                //tokens.add(tokNumber(Integer.parseInt(number)));
                 tokens.add(Token.tokNumber(Integer.parseInt(number)));
 
             } else if (c == '(' || c == ')') {
