@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 
@@ -30,6 +29,26 @@ public class Evaluator {
                 //si no hi ha cap operador a el stack
                 //operador enviat a el stack operadorStack si
                 operandorStack.push(t);
+            } else if (t.getTtype()== Token.Toktype.PAREN) {
+                //Entra si es un parentesis.
+                //Si es una obertura de parentesis
+                if (t.equals('(')) {
+                    //afegim el parentesis a el Stack
+                    operandorStack.push(t);
+                } else if (t.equals(')')) {
+                    //Si el parentesis tanca , hem de treure operadors fins que
+                    // trobam al cap un parentesis que el tanca(esquerra)
+                    // i fins que no hi ha operadors en operadorStack
+                    while (!t.equals('(') && !operandorStack.isEmpty()) {
+                        sortida.add(operandorStack.pop());
+                    }
+
+                    // Si trobam un parentesis a la esquerra,
+                    //treu el parèntesi esquerra ('(') de la pila d'operadors
+                    if (t.equals('(')) operandorStack.pop();
+
+                }
+
             }
 
 
