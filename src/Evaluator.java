@@ -27,15 +27,19 @@ public class Evaluator {
             }
 
         }
+        //Una vegada ha acabat el bucle no hi ha mes Tokens de entrada
+        // Bucle while que combroba que el Stack de operador hi ha operadors i les afegeix a la sortida.
         while (!operandorStack.isEmpty()) {
+            //pop agafa el primer valor de el Stack i
+            // el pasa a el final de sortida
             sortida.add(operandorStack.pop());
         }
-        //Stack<String> pila = new Stack<>();
-        System.out.println(sortida);
-
         // Finalment, crida a calcRPN amb la nova llista de tokens i torna el resultat
         Token[] list = sortida.toArray(new Token[sortida.size()]);
+
+        //Variable que agafa el valor de el calcul de la funcio calcRPN.
         int result =calcRPN(list);
+
         return result;
     }
 
@@ -87,6 +91,26 @@ public class Evaluator {
         return res;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
