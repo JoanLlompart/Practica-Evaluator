@@ -85,7 +85,7 @@ public class Token {
             boolean caracter = Character.isDigit(c);
             System.out.println(caracter);
             //Reiniciam la variable number per poder guardar el proxim nombre sencer
-             number = "";
+            number = "";
 
             if (caracter) {
                 // SI es un DIGIT juntar concatenar a un String temporal,
@@ -93,7 +93,7 @@ public class Token {
                 // despres ficar a una posicio de el ArrayList
 
 
-                String[] arTemp = afegirNumeros(caracter,i, number, c, expr);
+                String[] arTemp = afegirNumeros(caracter, i, number, c, expr);
                 i = Integer.parseInt(arTemp[1]);
                 number = arTemp[0];
 
@@ -101,19 +101,7 @@ public class Token {
                 //Anteriorment a la funcio afegirNumeros li hem incrementat per mirar la seguent
                 //posicio i ara li decrementam, per no saltar caracters.
                 i--;
-
-
-
-
-                //int numIndex = expr.charAt(i+1);
-                //boolean carTemp = Character.isDigit(numIndex);
-
-
-
-                //Menter caracter sigui True continua iterant el bucle.
-                // Token de tipo número
-                //tokens.add(tokNumber(Integer.parseInt(number)));
-                //tokens.add(Token.tokNumber(Integer.parseInt(number)));
+                // Afegim a el la llista tokens el Token de tipo número
                 tokens.add(tokNumber(Integer.parseInt(number)));
 
             } else if (c == '(' || c == ')') {
@@ -138,14 +126,14 @@ public class Token {
             number += c;
             //Increment de i per mirar si el següent number char es un digit.
             i++;
-            if (i <expr.length()) {
-                c =expr.charAt(i);
+            if (i < expr.length()) {
+                c = expr.charAt(i);
             } else {
                 //Sortida de el bucle
                 break;
             }
         }
-        return new String[]{number,String.valueOf(i)};
+        return new String[]{number, String.valueOf(i)};
     }
 
     private static void guardaDigits(String number, ArrayList<Token> tokens) {

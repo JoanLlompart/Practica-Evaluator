@@ -1,89 +1,123 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 
 public class Evaluator {
 
     public static int calculate(String expr) {
         // Convertim l'string d'entrada en una llista de tokens
-        Token[] tokens = Token.getTokens(expr);
-        // Efectua el procediment per convertir la llista de tokens en notació RPN
+        //Token[] tokens = Token.getTokens(expr);
+        //List<Token> tokens = new ArrayList<>();
+        // Efectua el procediment per convertir la llista de tokens en notació RPN(NOTACIO POLACA INVERSA)
+        //Stack<String> pila = new Stack<>();
+
+
         // Finalment, crida a calcRPN amb la nova llista de tokens i torna el resultat
+        //calcRPN();
         return 0;
     }
 
     public static int calcRPN(Token[] list) {
         // Calcula el valor resultant d'avaluar la llista de tokens
+
+        Stack<Integer> pila = new Stack<>();
+        Token t;
+
+
         return 0;
         
     }
-
-
 }
-
-
 
 
 /*
-public class Token {
-    private enum TokenType {tokNumber, tokOps, tokParen};
-    private TokenType type;
-    private String value;
-    // Constructor privado. Evita que se pueda instanciar.
-    private Token(TokenType type, String value) {
-        this.type = type;
-        this.value = value;
-    }
-    // Factory method: Torna un token de tipus número
-    public static Token tokNumber(int value) {
-        return new Token(TokenType.tokNumber, Integer.toString(value));
-    }
-    // Factory method: Torna un token de tipus operador
-    public static Token tokOp(char op) {
-        return new Token(TokenType.tokOps, Character.toString(op));
-    }
-    // Factory method: Torna un token de tipus parèntesi
-    public static Token tokParen(char paren) {
-        return new Token(TokenType.tokParen, Character.toString(paren));
-    }
-    // Retorna una representació String de l'objecte Token
-    public String toString() {
-        return value;
-    }
-    // Comprova si dos objectes Token són iguals
-    public boolean equals(Object o) {
-        if (!(o instanceof Token)) {
-            return false;
-        }
-        Token otherToken = (Token) o;
-        return this.type == otherToken.type && this.value.equals(otherToken.value);
-    }
-    // Separa un String en Tokens
-    public static Token[] getTokens(String s) {
-        List<Token> tokens = new ArrayList<>();
-        int i = 0;
-        while (i < s.length()) {
-            char c = s.charAt(i);
-            if (Character.isDigit(c)) {
-                // Token de tipo número
-                int start = i;
-                while (i < s.length() && Character.isDigit(s.charAt(i))) {
-                    i++;
-                }
-                int end = i;
-                String number = s.substring(start, end);
-                tokens.add(tokNumber(Integer.parseInt(number)));
-            } else if (c == '+' || c == '-' || c == '*' || c == '/') {
-                // Token de tipo operador
-                tokens.add(tokOp(c));
-                i++;
-            } else if (c == '(' || c == ')') {
-                // Token de tipo paréntesis
-                tokens.add(tokParen(c));
-                i++;
+
+public class Evaluator {
+
+    public static int calcRPN(Token[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+
+        for (Token token : tokens) {
+            if (token.getTtype() == Token.Toktype.NUMBER) {
+                stack.push(token.getValue());
             } else {
-                // Carácter desconocido
-                i++;
+                int operand2 = stack.pop();
+                int operand1 = stack.pop();
+                int result = 0;
+
+                switch (token.getTk()) {
+                    case '+':
+                        result = operand1 + operand2;
+                        break;
+                    case '-':
+                        result = operand1 - operand2;
+                        break;
+                    case '*':
+                        result = operand1 * operand2;
+                        break;
+                    case '/':
+                        result = operand1 / operand2;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Invalid operator: " + token.getTk());
+                }
+
+                stack.push(result);
             }
         }
-        return tokens.toArray(new Token[tokens.size()]);
+
+        return stack.pop();
+    }
+
+    public static int calculate(String expr) {
+        Stack<Token> operatorStack = new Stack<>();
+        ArrayList<Token> outputQueue = new ArrayList<>();
+
+        Token[] tokens = Token.getTokens(expr);
+
+        for (Token token : tokens) {
+            if (token.getTtype() == Token.Toktype.NUMBER) {
+                outputQueue.add(token);
+            } else if (token.getTk() == '(') {
+                operatorStack.push(token);
+            } else if (token.getTk() == ')') {
+                while (!operatorStack.isEmpty() && operatorStack.peek().getTk() != '(') {
+                    outputQueue.add(operatorStack.pop());
+                }
+                if (!operatorStack.isEmpty() && operatorStack.peek().getTk() != '(') {
+                    throw new IllegalArgumentException("Mismatched parentheses");
+                } else {
+                    operatorStack.pop();
+                }
+            } else if (token.getTtype() == Token.Toktype.OP) {
+                while (!operatorStack.isEmpty() && precedence(token) <= precedence(operatorStack.peek())) {
+                    outputQueue.add(operatorStack.pop());
+                }
+                operatorStack.push(token);
+            }
+        }
+
+        while (!operatorStack.isEmpty()) {
+            outputQueue.add(operatorStack.pop());
+        }
+
+        Token[] postfixTokens = outputQueue.toArray(new Token[outputQueue.size()]);
+        return calcRPN(postfixTokens);
+    }
+
+    private static int precedence(Token op) {
+        switch (op.getTk()) {
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+                return 2;
+            default:
+                throw new IllegalArgumentException("Invalid operator: " + op.getTk());
+        }
     }
 }
+
  */
