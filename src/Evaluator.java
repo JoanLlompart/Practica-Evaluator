@@ -22,14 +22,96 @@ public class Evaluator {
         // Calcula el valor resultant d'avaluar la llista de tokens
 
         Stack<Integer> pila = new Stack<>();
-        Token t;
+        //Token t;
 
+        //Altrament, és un operador
+        //▪ Treure «n» operands de la pila (cada operador "+"té determinat el "3" número d'operands).
 
-        return 0;
+        //▪ Evaluar l'operació, amb els operands com a arguments.
+        //▪ Fer push a la pila del valor resultat
+        //• Si només hi ha un valor resultant a la pila, aquest és el resultat final.
+        for (Token t: list) {
+            if (t.getTtype() == Token.Toktype.NUMBER) {
+                pila.push(t.getValue());
+            } else {
+                //Si no es un NUMBER, es de tipus operador.
+                //Amb pop() treim el element de amunt de la pila i el guada a la variable elDret/Esq.
+                int elDret = pila.pop();
+                int elEsq = pila.pop();
+                //Variable per anar guardant el resultat
+                int res = 0;
 
-
+                switch (t.getTk()) {
+                    case '+':
+                        //realitza la suma de forma normal
+                        res = elEsq + elDret;
+                        break;
+                    case '-':
+                        res = elEsq - elDret;
+                        break;
+                    case '*':
+                        res = elEsq * elDret;
+                        break;
+                    case '/':
+                        res = elEsq / elDret;
+                        break;
+                    default:
+                        throw new RuntimeException("Operador no reconegut");
+                }
+                //Realitza push a la pila del valor resultat
+                pila.push(res);
+            }
+        }
+        //Treu els valors que queden a la pila que sera el resultat.
+        return pila.pop();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
