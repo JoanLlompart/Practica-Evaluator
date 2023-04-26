@@ -75,6 +75,8 @@ public class Token {
 
     // A partir d'un String, torna una llista de tokens
     public static Token[] getTokens(String expr) {
+        //Elimina els espais en blanc de el String
+        //expr = expr.replace(" ","");
         ArrayList<Token> tokens = new ArrayList<>();
 
         String number;
@@ -86,6 +88,7 @@ public class Token {
             System.out.println(caracter);
             //Reiniciam la variable number per poder guardar el proxim nombre sencer
             number = "";
+
 
             if (caracter) {
                 // SI es un DIGIT juntar concatenar a un String temporal,
@@ -111,7 +114,11 @@ public class Token {
             } else if (c == '+' || c == '-' || c == '*' || c == '/') {
                 //crear tokOp
                 tokens.add(tokOp(c));
-            } else {
+            } else if (c == ' ') {
+                //Si te un espai hem de cambiar de token
+                // ha estat una causa gran de error.
+                continue;
+            }else {
                 throw new RuntimeException("Caracter no identificat.");
             }
 

@@ -20,7 +20,7 @@ public class Evaluator {
 
     public static int calcRPN(Token[] list) {
         // Calcula el valor resultant d'avaluar la llista de tokens
-/*
+
         Stack<Integer> pila = new Stack<>();
         Token t;
 
@@ -28,45 +28,11 @@ public class Evaluator {
         return 0;
 
 
- */
-        Stack<Integer> stack = new Stack<>();
-
-        for (Token token : list) {
-            if (token.getTtype() == Token.Toktype.NUMBER) {
-                stack.push(token.getValue());
-            } else {
-                int operand2 = stack.pop();
-                int operand1 = stack.pop();
-                int result = 0;
-
-                switch (token.getTk()) {
-                    case '+':
-                        result = operand1 + operand2;
-                        break;
-                    case '-':
-                        result = operand1 - operand2;
-                        break;
-                    case '*':
-                        result = operand1 * operand2;
-                        break;
-                    case '/':
-                        result = operand1 / operand2;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Invalid operator: " + token.getTk());
-                }
-
-                stack.push(result);
-            }
-        }
-
-        return stack.pop();
     }
 }
 
 
 /*
-
 public class Evaluator {
 
     public static int calcRPN(Token[] tokens) {
@@ -153,5 +119,4 @@ public class Evaluator {
         }
     }
 }
-
  */
