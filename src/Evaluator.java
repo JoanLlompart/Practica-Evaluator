@@ -22,10 +22,16 @@ public class Evaluator {
                 //afegim el nombre a la cua de sortida
                 sortida.add(t);
             } else if (t.getTtype()== Token.Toktype.OP ) {
-                while (!operandorStack.isEmpty() && preferencia(t) <= preferencia(operandorStack.peek()))
-                //operador enviat a el stack operadorStack
+                while (!operandorStack.isEmpty() && preferencia(t) <= preferencia(operandorStack.peek())) {
+                    // Afegim a sortida el operador amb el metode pop
+                    // que extreu el operador que esta al cap i el elimina.
+                    sortida.add(operandorStack.pop());
+                }
+                //si no hi ha cap operador a el stack
+                //operador enviat a el stack operadorStack si
                 operandorStack.push(t);
             }
+
 
         }
         //Una vegada ha acabat el bucle no hi ha mes Tokens de entrada
@@ -45,12 +51,17 @@ public class Evaluator {
     }
 
     private static int preferencia(Token op) {
+        //switch amb preferencias per el operadors
+        //Com mes gran es el nombre de retorn mes preferencia tendra.
         switch (op.getTk()) {
+            // sumes i restes tenen la preferencia mes baixa
             case '+','-':
                 return 1;
 
+                //Multiplicacio divisio i porcentatge tenen preferencia de valor 2
             case '*','%','/':
                 return 2;
+                //els elevats tenen preferencia de valor 3.
             case '^':
                 return 3;
             default:
