@@ -6,16 +6,37 @@ import java.util.Stack;
 public class Evaluator {
 
     public static int calculate(String expr) {
-        // Convertim l'string d'entrada en una llista de tokens
-        //Token[] tokens = Token.getTokens(expr);
-        //List<Token> tokens = new ArrayList<>();
-        // Efectua el procediment per convertir la llista de tokens en notació RPN(NOTACIO POLACA INVERSA)
-        //Stack<String> pila = new Stack<>();
 
+        // Llista de tokens de sortida (output)
+        ArrayList<Token> sortida = new ArrayList<>();
+
+        // Pila (Stack) d'operandor.
+        Stack<Token> operandorStack = new Stack<>();
+
+        // Convertim l'string d'entrada en una llista de tokens
+        Token[] tokens = Token.getTokens(expr);
+
+        // Efectua el procediment per convertir la llista de tokens en notació RPN(NOTACIO POLACA INVERSA)
+        for (Token t:tokens) {
+            if (t.getTtype()== Token.Toktype.NUMBER) {
+                //afegim el nombre a la cua de sortida
+                sortida.add(t);
+            } else if (t.getTtype()== Token.Toktype.OP) {
+                //operador enviat a el stack operadorStack
+                operandorStack.push(t);
+            }
+
+        }
+        while (!operandorStack.isEmpty()) {
+            sortida.add(operandorStack.pop());
+        }
+        //Stack<String> pila = new Stack<>();
+        System.out.println(sortida);
 
         // Finalment, crida a calcRPN amb la nova llista de tokens i torna el resultat
-        //calcRPN();
-        return 0;
+        Token[] list = sortida.toArray(new Token[sortida.size()]);
+        int result =calcRPN(list);
+        return result;
     }
 
     public static int calcRPN(Token[] list) {
