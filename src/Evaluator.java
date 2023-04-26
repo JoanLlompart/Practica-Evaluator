@@ -21,7 +21,8 @@ public class Evaluator {
             if (t.getTtype()== Token.Toktype.NUMBER) {
                 //afegim el nombre a la cua de sortida
                 sortida.add(t);
-            } else if (t.getTtype()== Token.Toktype.OP) {
+            } else if (t.getTtype()== Token.Toktype.OP ) {
+                while (!operandorStack.isEmpty() && preferencia(t) <= preferencia(operandorStack.peek()))
                 //operador enviat a el stack operadorStack
                 operandorStack.push(t);
             }
@@ -41,6 +42,21 @@ public class Evaluator {
         int result =calcRPN(list);
 
         return result;
+    }
+
+    private static int preferencia(Token op) {
+        switch (op.getTk()) {
+            case '+','-':
+                return 1;
+
+            case '*','%','/':
+                return 2;
+            case '^':
+                return 3;
+            default:
+                throw new RuntimeException("No se ha pogut determinar la preferencia perque el operador no es valid");
+        }
+
     }
 
     public static int calcRPN(Token[] list) {
