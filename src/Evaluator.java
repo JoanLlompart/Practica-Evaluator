@@ -34,8 +34,9 @@ public class Evaluator {
                 //Variable per anar guardant el resultat
                 int res = 0;
 
+                // res guarda el resultat de calOper,
+                // que se encarrega de transformar RPN a normal i calcula el resultat.
                 res = calcOper(t,res,elEsq,elDret);
-
                 //Realitza push a la pila del valor resultat
                 pila.push(res);
             }
