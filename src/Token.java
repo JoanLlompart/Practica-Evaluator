@@ -85,7 +85,6 @@ public class Token {
             char c = expr.charAt(i);
             //int asciiValue = (int) c;
             boolean caracter = Character.isDigit(c);
-            System.out.println(caracter);
             //Reiniciam la variable number per poder guardar el proxim nombre sencer
             number = "";
 
@@ -118,7 +117,7 @@ public class Token {
                 //Si te un espai hem de cambiar de token
                 // ha estat una causa gran de error.
                 continue;
-            }else {
+            } else {
                 throw new RuntimeException("Caracter no identificat.");
             }
 
