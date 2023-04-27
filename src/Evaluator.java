@@ -15,6 +15,9 @@ public class Evaluator {
         // Convertim l'string d'entrada en una llista de tokens
         Token[] tokens = Token.getTokens(expr);
 
+        //char temp guardara si hi ha un parentesis obert
+        char temp;
+
         // Efectua el procediment per convertir la llista de tokens en notació RPN(NOTACIO POLACA INVERSA)
         for (Token t:tokens) {
             if (t.getTtype()== Token.Toktype.NUMBER) {
@@ -24,7 +27,21 @@ public class Evaluator {
                 while (!operandorStack.isEmpty() && preferencia(t) <= preferencia(operandorStack.peek())) {
                     // Afegim a sortida el operador amb el metode pop
                     // que extreu el operador que esta al cap i el elimina.
+
+                    if (operandorStack.peek().getTtype() == Token.Toktype.OP) {
+                        if (operandorStack.peek().getTtype() == Token.Toktype.PAREN ) {
+                            //Si el proxim token de el cap de el Stack NO es un parentesis, fica el operador a sortida
+                            //sortida.add(operandorStack.pop());
+                            temp = operandorStack.pop().getTk(); //temp guarda el parentesis per ficarlo despres.
+                            sortida.add(operandorStack.pop());
+                            operandorStack.push(Token.tokParen(temp));
+                        }
+
+
+                    }
+
                     sortida.add(operandorStack.pop());
+
                 }
                 //si no hi ha cap operador a el stack
                 //operador enviat a el stack operadorStack si
@@ -83,6 +100,8 @@ public class Evaluator {
                 //els elevats tenen preferencia de valor 3.
             case '^':
                 return 3;
+            case '(',')':
+                return 4;
             default:
                 throw new RuntimeException("No se ha pogut determinar la preferencia perque el operador no es valid");
         }

@@ -85,6 +85,7 @@ public class EvaluatorTest {
 
     @Test
     public void tests_potencia() {
+        // falta implementar potencies a test RPN
         assertEquals(8, Evaluator.calculate("2^3"));
         assertEquals(81, Evaluator.calculate("3^(3+1)"));
         assertEquals(-2, Evaluator.calculate("-2^1"));
