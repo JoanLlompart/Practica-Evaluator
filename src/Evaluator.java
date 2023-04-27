@@ -18,6 +18,9 @@ public class Evaluator {
         //char temp guardara si hi ha un parentesis obert
         char temp;
 
+        //Guarderem els parentesis en una llista aposta
+        Stack<Token> parenStack = new Stack<>();
+
         // Efectua el procediment per convertir la llista de tokens en notació RPN(NOTACIO POLACA INVERSA)
         for (Token t:tokens) {
             if (t.getTtype()== Token.Toktype.NUMBER) {
@@ -149,6 +152,10 @@ public class Evaluator {
                 break;
             case '/':
                 res = elEsq / elDret;
+                break;
+            case '^':
+                //Math pow retorna un double per aixo mateix feim el cast a int
+                res = (int) Math.pow(elEsq,elDret);
                 break;
             default:
                 throw new RuntimeException("Operador no reconegut");

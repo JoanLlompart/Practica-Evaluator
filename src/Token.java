@@ -110,7 +110,7 @@ public class Token {
                 //guardaDigits(number,tokens);
                 tokens.add(tokParen(c));
                 //reinicia la variable number.
-            } else if (c == '+' || c == '-' || c == '*' || c == '/') {
+            } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
                 //crear tokOp
                 tokens.add(tokOp(c));
             } else if (c == ' ') {
