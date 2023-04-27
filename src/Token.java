@@ -51,7 +51,7 @@ public class Token {
     // Torna un token de tipus "PAREN"
     static Token tokParen(char c) {
         Token t = new Token();
-        t.ttype = Toktype.OP;
+        t.ttype = Toktype.PAREN;
         t.tk = c;
         return t;
     }

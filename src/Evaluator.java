@@ -30,9 +30,9 @@ public class Evaluator {
                 while (!operandorStack.isEmpty() && preferencia(t) <= preferencia(operandorStack.peek())) {
                     // Afegim a sortida el operador amb el metode pop
                     // que extreu el operador que esta al cap i el elimina.
-
                     if (operandorStack.peek().getTtype() == Token.Toktype.OP) {
-                        if (operandorStack.peek().getTtype() == Token.Toktype.PAREN ) {
+                        //Token seguent =operandorStack.get(1);
+                        /*if (operandorStack.peek().getTtype() == Token.Toktype.PAREN ) {
                             //Si el proxim token de el cap de el Stack NO es un parentesis, fica el operador a sortida
                             //sortida.add(operandorStack.pop());
                             temp = operandorStack.pop().getTk(); //temp guarda el parentesis per ficarlo despres.
@@ -40,15 +40,28 @@ public class Evaluator {
                             operandorStack.push(Token.tokParen(temp));
                         }
 
-
+                         */
+                    }
+                    /*
+                    if (operandorStack.size()>=2) {
+                        Token seguent =operandorStack.get(1);
+                        sortida.add(seguent);
+                    } else if (!operandorStack.isEmpty() && operandorStack.peek().getTtype() == Token.Toktype.OP) {
+                        sortida.add(operandorStack.pop());
+                    } else if (operandorStack.peek().getTtype() == Token.Toktype.PAREN) {
+                        operandorStack.pop();
+                    } else {
+                        sortida.add(operandorStack.pop());
                     }
 
+                     */
                     sortida.add(operandorStack.pop());
 
                 }
                 //si no hi ha cap operador a el stack
                 //operador enviat a el stack operadorStack si
                 operandorStack.push(t);
+
             } else if (t.getTtype()== Token.Toktype.PAREN) {
                 //Entra si es un parentesis.
                 //Si es una obertura de parentesis
@@ -62,7 +75,6 @@ public class Evaluator {
                     while (!t.equals('(') && !operandorStack.isEmpty()) {
                         sortida.add(operandorStack.pop());
                     }
-
                     // Si trobam un parentesis a la esquerra,
                     //treu el parèntesi esquerra ('(') de la pila d'operadors
                     if (t.equals('(')) operandorStack.pop();
@@ -70,9 +82,10 @@ public class Evaluator {
                 }
 
             }
-
-
         }
+
+
+
         //Una vegada ha acabat el bucle no hi ha mes Tokens de entrada
         // Bucle while que combroba que el Stack de operador hi ha operadors i les afegeix a la sortida.
         while (!operandorStack.isEmpty()) {
@@ -103,10 +116,15 @@ public class Evaluator {
                 //els elevats tenen preferencia de valor 3.
             case '^':
                 return 3;
+
             case '(',')':
-                return 4;
+                return 0;
+
+
             default:
                 throw new RuntimeException("No se ha pogut determinar la preferencia perque el operador no es valid");
+
+
         }
 
     }
@@ -227,95 +245,3 @@ public class Evaluator {
 
 
 
-
-
-
-
-/*
-public class Evaluator {
-
-    public static int calcRPN(Token[] tokens) {
-        Stack<Integer> stack = new Stack<>();
-
-        for (Token token : tokens) {
-            if (token.getTtype() == Token.Toktype.NUMBER) {
-                stack.push(token.getValue());
-            } else {
-                int operand2 = stack.pop();
-                int operand1 = stack.pop();
-                int result = 0;
-
-                switch (token.getTk()) {
-                    case '+':
-                        result = operand1 + operand2;
-                        break;
-                    case '-':
-                        result = operand1 - operand2;
-                        break;
-                    case '*':
-                        result = operand1 * operand2;
-                        break;
-                    case '/':
-                        result = operand1 / operand2;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Invalid operator: " + token.getTk());
-                }
-
-                stack.push(result);
-            }
-        }
-
-        return stack.pop();
-    }
-
-    public static int calculate(String expr) {
-        Stack<Token> operatorStack = new Stack<>();
-        ArrayList<Token> outputQueue = new ArrayList<>();
-
-        Token[] tokens = Token.getTokens(expr);
-
-        for (Token token : tokens) {
-            if (token.getTtype() == Token.Toktype.NUMBER) {
-                outputQueue.add(token);
-            } else if (token.getTk() == '(') {
-                operatorStack.push(token);
-            } else if (token.getTk() == ')') {
-                while (!operatorStack.isEmpty() && operatorStack.peek().getTk() != '(') {
-                    outputQueue.add(operatorStack.pop());
-                }
-                if (!operatorStack.isEmpty() && operatorStack.peek().getTk() != '(') {
-                    throw new IllegalArgumentException("Mismatched parentheses");
-                } else {
-                    operatorStack.pop();
-                }
-            } else if (token.getTtype() == Token.Toktype.OP) {
-                while (!operatorStack.isEmpty() && precedence(token) <= precedence(operatorStack.peek())) {
-                    outputQueue.add(operatorStack.pop());
-                }
-                operatorStack.push(token);
-            }
-        }
-
-        while (!operatorStack.isEmpty()) {
-            outputQueue.add(operatorStack.pop());
-        }
-
-        Token[] postfixTokens = outputQueue.toArray(new Token[outputQueue.size()]);
-        return calcRPN(postfixTokens);
-    }
-
-    private static int precedence(Token op) {
-        switch (op.getTk()) {
-            case '+':
-            case '-':
-                return 1;
-            case '*':
-            case '/':
-                return 2;
-            default:
-                throw new IllegalArgumentException("Invalid operator: " + op.getTk());
-        }
-    }
-}
- */
