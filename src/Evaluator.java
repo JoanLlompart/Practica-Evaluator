@@ -24,8 +24,11 @@ public class Evaluator {
                 while (!operandorStack.isEmpty() && preferencia(t) <= preferencia(operandorStack.peek())) {
                     // Afegim a sortida el operador amb el metode pop
                     // que extreu el operador que esta al cap i el elimina.
+                    sortida.add(operandorStack.pop());
+
+
                     //if (operandorStack.peek().getTtype() == Token.Toktype.OP) {
-                        //Token seguent =operandorStack.get(1);
+                    //Token seguent =operandorStack.get(1);
                         /*if (operandorStack.peek().getTtype() == Token.Toktype.PAREN ) {
                             //Si el proxim token de el cap de el Stack NO es un parentesis, fica el operador a sortida
                             //sortida.add(operandorStack.pop());
@@ -49,7 +52,6 @@ public class Evaluator {
                     }
 
                      */
-                    sortida.add(operandorStack.pop());
 
                 }
                 //si no hi ha cap operador a el stack
@@ -59,19 +61,28 @@ public class Evaluator {
             } else if (t.getTtype()== Token.Toktype.PAREN) {
                 //Entra si es un parentesis.
                 //Si es una obertura de parentesis
-                if (t.equals('(')) {
+                if (t.getTk() == '(') {
                     //afegim el parentesis a el Stack
                     operandorStack.push(t);
-                } else if (t.equals(')')) {
+                } else if (t.getTk() == ')') {
                     //Si el parentesis tanca , hem de treure operadors fins que
                     // trobam al cap un parentesis que el tanca(esquerra)
                     // i fins que no hi ha operadors en operadorStack
-                    while (!t.equals('(') && !operandorStack.isEmpty()) {
-                        sortida.add(operandorStack.pop());
+                    while (t.getTk() != '(' && !operandorStack.isEmpty()) {
+                        char capDePila = operandorStack.peek().getTk();
+                        if (operandorStack.size() >= 2) {
+                            char següentDePila = operandorStack.get(1).getTk();
+                        }
+
+                        if (capDePila == '(') {
+                            operandorStack.pop();
+                        } else {
+                            sortida.add(operandorStack.pop());
+                        }
                     }
                     // Si trobam un parentesis a la esquerra,
                     //treu el parèntesi esquerra ('(') de la pila d'operadors
-                    if (t.equals('(')) operandorStack.pop();
+                    if (t.getTk() == '(') operandorStack.pop();
                 }
 
             }
@@ -103,15 +114,15 @@ public class Evaluator {
             case '+','-':
                 return 1;
 
-                //Multiplicacio divisio i porcentatge tenen preferencia de valor 2
+            //Multiplicacio divisio i porcentatge tenen preferencia de valor 2
             case '*','%','/':
                 return 2;
-                //els elevats tenen preferencia de valor 3.
+            //els elevats tenen preferencia de valor 3.
             case '^':
                 return 3;
 
             case '(',')':
-                return 4;
+                return 0;
 
 
             default:
@@ -174,7 +185,6 @@ public class Evaluator {
         return res;
     }
 }
-
 
 
 
