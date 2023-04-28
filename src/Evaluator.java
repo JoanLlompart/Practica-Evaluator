@@ -47,10 +47,9 @@ public class Evaluator {
                         // el cap. Per poder eliminar valos i tornalos a ficar
                         if (operandorStack.size() >= 2) {
                             char proxCap =operandorStack.get(1).getTk();
-
                         }
                         //si el proxim token es un parentesis  de obertura el eliminarem
-                        if (capDePila == '(') {
+                        if (capDePila == '(' || capDePila == ')') {
                             operandorStack.pop();
                         } else {
                             // de el contrari agafam el token i el pasam a el ArrayList de sortida.
@@ -116,8 +115,34 @@ public class Evaluator {
         // Calcula el valor resultant d'avaluar la llista de tokens
 
         Stack<Integer> pila = new Stack<>();
-
+        //Variable per anar guardant el resultat
+        int res = 0;
         for (Token t: list) {
+            if (pila.size() == 1 && t.getTtype() == Token.Toktype.OP) {
+                //tempPila guarda el numero que queda a la pila i elimina el valor de la pila.
+                int tempPila =pila.pop();
+                //amb la pila buida afegim el element de OP en aquest cas nomes pot ser (-+)
+                //falta afegir un control perque nomes accepti negatius o positius
+                //pila.push((int) t.getTk());
+                if (t.getTk() == '-') {
+                    pila.push((int) '-');
+                }
+                if (t.getTk() == '+') {
+                    pila.push((int) '+');
+                }
+                // despres tornam  a posar el operand a la dreta.
+                pila.push(tempPila);
+
+                //res = ;
+                /*
+                while (!pila.empty()) {
+                    int element = pila.pop();
+                    res = res * 10 + element;
+                }
+
+                 */
+
+            }
             if (t.getTtype() == Token.Toktype.NUMBER) {
                 pila.push(t.getValue());
             } else {
@@ -125,8 +150,9 @@ public class Evaluator {
                 //Amb pop() treim el element de amunt de la pila i el guada a la variable elDret/Esq.
                 int elDret = pila.pop();
                 int elEsq = pila.pop();
+
                 //Variable per anar guardant el resultat
-                int res = 0;
+                //int res = 0;
 
                 // res guarda el resultat de calOper,
                 // que se encarrega de transformar RPN a normal i calcula el resultat.
