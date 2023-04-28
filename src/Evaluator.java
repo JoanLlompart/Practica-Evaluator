@@ -101,6 +101,8 @@ public class Evaluator {
 
             case '(',')':
                 return 0;
+            case 'n' :
+                return 4;
 
 
             default:
@@ -124,6 +126,8 @@ public class Evaluator {
                 //amb la pila buida afegim el element de OP en aquest cas nomes pot ser (-+)
                 //falta afegir un control perque nomes accepti negatius o positius
                 //pila.push((int) t.getTk());
+
+                /*
                 if (t.getTk() == '-') {
                     pila.push((int) '-');
                 }
@@ -132,6 +136,15 @@ public class Evaluator {
                 }
                 // despres tornam  a posar el operand a la dreta.
                 pila.push(tempPila);
+
+                 */
+
+                res = tempPila;
+                if (t.getTk() == '-' ) {
+                     return res = -res;
+                }
+
+
 
                 //res = ;
                 /*
@@ -189,6 +202,12 @@ public class Evaluator {
         }
         return res;
     }
+
+
+    private static void opUnaris(Token t) {
+
+    }
+
 }
 
 

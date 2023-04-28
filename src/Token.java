@@ -115,6 +115,7 @@ public class Token {
             //Reiniciam la variable number per poder guardar el proxim nombre sencer
             number = "";
 
+            identificarUnari(tokens,expr,c);
 
             if (caracter) {
                 // SI es un DIGIT juntar concatenar a un String temporal,
@@ -137,7 +138,7 @@ public class Token {
                 //guardaDigits(number,tokens);
                 tokens.add(tokParen(c));
                 //reinicia la variable number.
-            } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
+            } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == 'n') { // n es el operador unari.
                 //Afegeix els tokens que son operadors a tokOp.
                 tokens.add(tokOp(c));
             } else if (c == ' ') {
@@ -161,6 +162,11 @@ public class Token {
          la qual cosa hauria de millorar el rendiment.
          */
         return tokens.toArray(new Token[0]);
+    }
+
+    private static void identificarUnari(ArrayList<Token> tokens, String expr, char c) {
+
+
     }
 
     private static String[] afegirNumeros(boolean caracter, int i, String number, char c, String expr) {
