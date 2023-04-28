@@ -138,7 +138,7 @@ public class Token {
                 tokens.add(tokParen(c));
                 //reinicia la variable number.
             } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
-                //crear tokOp
+                //Afegeix els tokens que son operadors a tokOp.
                 tokens.add(tokOp(c));
             } else if (c == ' ') {
                 //Si te un espai hem de cambiar de token
@@ -149,7 +149,18 @@ public class Token {
             }
 
         }
-        return tokens.toArray(tokens.toArray(new Token[tokens.size()]));
+        // Versio antes de optimitzar el return :
+        //return tokens.toArray((new Token[tokens.size()]));
+
+        /*
+        Versio mes optimitzada de el return:
+        Perque esta mes optimitzada:
+        el mètode toArray determina automàticament la longitud del array necessari,
+         i el crea internament.
+         En fer-ho, s'elimina la necessitat de crear un nou array de Token i copiar els elements de la llista,
+         la qual cosa hauria de millorar el rendiment.
+         */
+        return tokens.toArray(new Token[0]);
     }
 
     private static String[] afegirNumeros(boolean caracter, int i, String number, char c, String expr) {

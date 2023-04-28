@@ -25,34 +25,6 @@ public class Evaluator {
                     // Afegim a sortida el operador amb el metode pop
                     // que extreu el operador que esta al cap i el elimina.
                     sortida.add(operandorStack.pop());
-
-
-                    //if (operandorStack.peek().getTtype() == Token.Toktype.OP) {
-                    //Token seguent =operandorStack.get(1);
-                        /*if (operandorStack.peek().getTtype() == Token.Toktype.PAREN ) {
-                            //Si el proxim token de el cap de el Stack NO es un parentesis, fica el operador a sortida
-                            //sortida.add(operandorStack.pop());
-                            temp = operandorStack.pop().getTk(); //temp guarda el parentesis per ficarlo despres.
-                            sortida.add(operandorStack.pop());
-                            operandorStack.push(Token.tokParen(temp));
-                        }
-
-                         */
-                    //}
-                    /*
-                    if (operandorStack.size()>=2) {
-                        Token seguent =operandorStack.get(1);
-                        sortida.add(seguent);
-                    } else if (!operandorStack.isEmpty() && operandorStack.peek().getTtype() == Token.Toktype.OP) {
-                        sortida.add(operandorStack.pop());
-                    } else if (operandorStack.peek().getTtype() == Token.Toktype.PAREN) {
-                        operandorStack.pop();
-                    } else {
-                        sortida.add(operandorStack.pop());
-                    }
-
-                     */
-
                 }
                 //si no hi ha cap operador a el stack
                 //operador enviat a el stack operadorStack si
@@ -69,20 +41,27 @@ public class Evaluator {
                     // trobam al cap un parentesis que el tanca(esquerra)
                     // i fins que no hi ha operadors en operadorStack
                     while (t.getTk() != '(' && !operandorStack.isEmpty()) {
+                        //variable caDePila que guarda el proxim token de el Stack
                         char capDePila = operandorStack.peek().getTk();
+                        //Si el Stack te dos o mes elements podrem mirar el token que tenim a la segona posicio de
+                        // el cap. Per poder eliminar valos i tornalos a ficar
                         if (operandorStack.size() >= 2) {
-                            char següentDePila = operandorStack.get(1).getTk();
-                        }
+                            char proxCap =operandorStack.get(1).getTk();
 
+                        }
+                        //si el proxim token es un parentesis  de obertura el eliminarem
                         if (capDePila == '(') {
                             operandorStack.pop();
                         } else {
+                            // de el contrari agafam el token i el pasam a el ArrayList de sortida.
                             sortida.add(operandorStack.pop());
                         }
                     }
                     // Si trobam un parentesis a la esquerra,
                     //treu el parèntesi esquerra ('(') de la pila d'operadors
-                    if (t.getTk() == '(') operandorStack.pop();
+
+                   // (REVISAR)
+                    //if (t.getTk() == '(') operandorStack.pop();
                 }
 
             }
