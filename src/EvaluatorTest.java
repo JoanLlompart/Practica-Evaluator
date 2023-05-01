@@ -26,6 +26,7 @@ public class EvaluatorTest {
         tokens = Token.getTokens("1 2 20 5 - * +");
         assertEquals(31, Evaluator.calcRPN(tokens));
 
+
     }
     @Test
     public void tests_2_operands() {

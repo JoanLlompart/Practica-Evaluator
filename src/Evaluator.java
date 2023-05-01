@@ -31,39 +31,14 @@ public class Evaluator {
                 operandorStack.push(t);
 
             } else if (t.getTtype()== Token.Toktype.PAREN) {
+
+
+
                 //Entra si es un parentesis.
-                //Si es una obertura de parentesis
-                if (t.getTk() == '(') {
-                    //afegim el parentesis a el Stack
-                    operandorStack.push(t);
-                } else if (t.getTk() == ')') {
-                    //Si el parentesis tanca , hem de treure operadors fins que
-                    // trobam al cap un parentesis que el tanca(esquerra)
-                    // i fins que no hi ha operadors en operadorStack
-                    while (t.getTk() != '(' && !operandorStack.isEmpty()) {
-                        //variable caDePila que guarda el proxim token de el Stack
-                        char capDePila = operandorStack.peek().getTk();
-                        //Si el Stack te dos o mes elements podrem mirar el token que tenim a la segona posicio de
-                        // el cap. Per poder eliminar valos i tornalos a ficar
-                        if (operandorStack.size() >= 2) {
-                            char proxCap =operandorStack.get(1).getTk();
-                        }
-                        //si el proxim token es un parentesis  de obertura el eliminarem
-                        if (capDePila == '(' || capDePila == ')') {
-                            operandorStack.pop();
-                        } else {
-                            // de el contrari agafam el token i el pasam a el ArrayList de sortida.
-                            sortida.add(operandorStack.pop());
-                        }
-                    }
-                    // Si trobam un parentesis a la esquerra,
-                    //treu el parèntesi esquerra ('(') de la pila d'operadors
-
-                   // (REVISAR)
-                    //if (t.getTk() == '(') operandorStack.pop();
-                }
-
+                parentFunction(t,operandorStack,sortida);
             }
+
+
         }
 
 
@@ -84,6 +59,39 @@ public class Evaluator {
         return result;
     }
 
+    private static void parentFunction(Token t, Stack<Token> operandorStack, ArrayList<Token> sortida) {
+        //Si es una obertura de parentesis
+        if (t.getTk() == '(') {
+            //afegim el parentesis a el Stack
+            operandorStack.push(t);
+        } else if (t.getTk() == ')') {
+            //Si el parentesis tanca , hem de treure operadors fins que
+            // trobam al cap un parentesis que el tanca(esquerra)
+            // i fins que no hi ha operadors en operadorStack
+            while (t.getTk() != '(' && !operandorStack.isEmpty()) {
+                //variable caDePila que guarda el proxim token de el Stack
+                char capDePila = operandorStack.peek().getTk();
+                //Si el Stack te dos o mes elements podrem mirar el token que tenim a la segona posicio de
+                // el cap. Per poder eliminar valos i tornalos a ficar
+                if (operandorStack.size() >= 2) {
+                    char proxCap =operandorStack.get(1).getTk();
+                }
+                //si el proxim token es un parentesis  de obertura el eliminarem
+                if (capDePila == '(' || capDePila == ')') {
+                    operandorStack.pop();
+                } else {
+                    // de el contrari agafam el token i el pasam a el ArrayList de sortida.
+                    sortida.add(operandorStack.pop());
+                }
+            }
+            // Si trobam un parentesis a la esquerra,
+            //treu el parèntesi esquerra ('(') de la pila d'operadors
+
+            // (REVISAR)
+            //if (t.getTk() == '(') operandorStack.pop();
+        }
+    }
+
     private static int preferencia(Token op) {
         //switch amb preferencias per el operadors
         //Com mes gran es el nombre de retorn mes preferencia tendra.
@@ -101,7 +109,7 @@ public class Evaluator {
 
             case '(',')':
                 return 0;
-            case 'n' :
+            case '$' :
                 return 4;
 
 
@@ -141,7 +149,7 @@ public class Evaluator {
 
                 res = tempPila;
                 if (t.getTk() == '-' ) {
-                     return res = -res;
+                     return res = - res;
                 }
 
 

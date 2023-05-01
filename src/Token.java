@@ -140,17 +140,32 @@ public class Token {
                 //reinicia la variable number.
             } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') { // n es el operador unari.
 
+                /*int següent = i +1;
+                int anterior = i -1;
+                //Si el valor negatiu esta a la primera posicio
+                if (c == '-' && i == 0) {
+                    tokOp('$');
+                } else if (c == '-' && anterior == '(') {
+                    tokOp('$');
+                } else if (c == '-' && anterior == '/' || c == '-' && anterior == '*') {
+                    tokOp('$');
+                }
+
+                 */
                 //Afegeix els tokens que son operadors a tokOp.
                 tokens.add(tokOp(c));
-/*
-               if (tokens.get(i).getValue() == '-') {
+
+
+               /*if (tokens.get(i).getValue() == '-') {
                     identificarUnari(tokens,expr,c, i);
                 } else {
                     //Afegeix els tokens que son operadors a tokOp.
                     tokens.add(tokOp(c));
                 }
 
- */
+                */
+
+
 
             } else if (c == ' ') {
                 //Si te un espai hem de cambiar de token
@@ -173,7 +188,7 @@ public class Token {
          */
         return tokens.toArray(new Token[0]);
     }
-/*
+
     private static void identificarUnari(ArrayList<Token> tokens, String expr, char c , int i) {
        // if (c == '-')
         int següent = i +1;
@@ -196,7 +211,7 @@ public class Token {
         }
     }
 
- */
+
     private static String[] afegirNumeros(boolean caracter, int i, String number, char c, String expr) {
         //Menter caracter sigui True continua iterant el bucle.
         while (Character.isDigit(expr.charAt(i))) {
