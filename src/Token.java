@@ -115,7 +115,7 @@ public class Token {
             //Reiniciam la variable number per poder guardar el proxim nombre sencer
             number = "";
 
-            identificarUnari(tokens,expr,c);
+
 
             if (caracter) {
                 // SI es un DIGIT juntar concatenar a un String temporal,
@@ -138,9 +138,20 @@ public class Token {
                 //guardaDigits(number,tokens);
                 tokens.add(tokParen(c));
                 //reinicia la variable number.
-            } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == 'n') { // n es el operador unari.
+            } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') { // n es el operador unari.
+
                 //Afegeix els tokens que son operadors a tokOp.
                 tokens.add(tokOp(c));
+/*
+               if (tokens.get(i).getValue() == '-') {
+                    identificarUnari(tokens,expr,c, i);
+                } else {
+                    //Afegeix els tokens que son operadors a tokOp.
+                    tokens.add(tokOp(c));
+                }
+
+ */
+
             } else if (c == ' ') {
                 //Si te un espai hem de cambiar de token
                 // ha estat una causa gran de error.
@@ -148,7 +159,6 @@ public class Token {
             } else {
                 throw new RuntimeException("Caracter no identificat.");
             }
-
         }
         // Versio antes de optimitzar el return :
         //return tokens.toArray((new Token[tokens.size()]));
@@ -163,12 +173,30 @@ public class Token {
          */
         return tokens.toArray(new Token[0]);
     }
-
-    private static void identificarUnari(ArrayList<Token> tokens, String expr, char c) {
-
-
+/*
+    private static void identificarUnari(ArrayList<Token> tokens, String expr, char c , int i) {
+       // if (c == '-')
+        int següent = i +1;
+        int anterior = i -1;
+        int tok = tokens.get(i).getValue();
+        // hem de mirar que si el simbol esta a la primera posicio sera 'n'
+        // Si antes de el token actual tenim un parentesis = 'n'
+        // Si el token actual antes tenim un altre operador de multiplicacio o divisio sera el menos sustituit per 'n'
+        
+        if (tokens.get(anterior).getValue() == '(') {
+            tokens.add(tokOp('n'));
+        } else if (tokens.get(anterior).getValue() == '*' ) {
+            tokens.add(tokOp('n'));
+        } else if (tokens.get(anterior).getValue() == '/') {
+            tokens.add(tokOp('n'));
+        } else if (i == 0) {
+            tokens.add(tokOp('n'));
+        } else {
+            tokens.add(tokOp('n'));
+        }
     }
 
+ */
     private static String[] afegirNumeros(boolean caracter, int i, String number, char c, String expr) {
         //Menter caracter sigui True continua iterant el bucle.
         while (Character.isDigit(expr.charAt(i))) {
