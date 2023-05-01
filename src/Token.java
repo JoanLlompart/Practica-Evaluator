@@ -199,15 +199,15 @@ public class Token {
         // Si el token actual antes tenim un altre operador de multiplicacio o divisio sera el menos sustituit per 'n'
         
         if (tokens.get(anterior).getValue() == '(') {
-            tokens.add(tokOp('n'));
+            tokens.add(tokOp('$'));
         } else if (tokens.get(anterior).getValue() == '*' ) {
-            tokens.add(tokOp('n'));
+            tokens.add(tokOp('$'));
         } else if (tokens.get(anterior).getValue() == '/') {
-            tokens.add(tokOp('n'));
+            tokens.add(tokOp('$'));
         } else if (i == 0) {
-            tokens.add(tokOp('n'));
+            tokens.add(tokOp('$'));
         } else {
-            tokens.add(tokOp('n'));
+            tokens.add(tokOp('$'));
         }
     }
 
@@ -228,11 +228,5 @@ public class Token {
         }
         return new String[]{number, String.valueOf(i)};
     }
-
-    private static void guardaDigits(String number, ArrayList<Token> tokens) {
-        tokens.add(Token.tokNumber(number.charAt(Integer.parseInt(number))));
-    }
-
-
 }
 

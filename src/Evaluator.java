@@ -31,18 +31,10 @@ public class Evaluator {
                 operandorStack.push(t);
 
             } else if (t.getTtype()== Token.Toktype.PAREN) {
-
-
-
-                //Entra si es un parentesis.
+                //Entra si es un parentesis, es a dir,Toktype de tipus PAREN.
                 parentFunction(t,operandorStack,sortida);
             }
-
-
         }
-
-
-
         //Una vegada ha acabat el bucle no hi ha mes Tokens de entrada
         // Bucle while que combroba que el Stack de operador hi ha operadors i les afegeix a la sortida.
         while (!operandorStack.isEmpty()) {
@@ -50,6 +42,7 @@ public class Evaluator {
             // el pasa a el final de sortida
             sortida.add(operandorStack.pop());
         }
+
         // Finalment, crida a calcRPN amb la nova llista de tokens i torna el resultat
         Token[] list = sortida.toArray(new Token[sortida.size()]);
 
@@ -123,10 +116,12 @@ public class Evaluator {
 
     public static int calcRPN(Token[] list) {
         // Calcula el valor resultant d'avaluar la llista de tokens
-
+        // Stack de Integer per realitzar les operacions de Notacio Polaca Inversa
         Stack<Integer> pila = new Stack<>();
+
         //Variable per anar guardant el resultat
         int res = 0;
+
         for (Token t: list) {
             if (pila.size() == 1 && t.getTtype() == Token.Toktype.OP) {
                 //tempPila guarda el numero que queda a la pila i elimina el valor de la pila.
@@ -172,9 +167,6 @@ public class Evaluator {
                 int elDret = pila.pop();
                 int elEsq = pila.pop();
 
-                //Variable per anar guardant el resultat
-                //int res = 0;
-
                 // res guarda el resultat de calOper,
                 // que se encarrega de transformar RPN a normal i calcula el resultat.
                 res = calcOper(t,res,elEsq,elDret);
@@ -210,12 +202,6 @@ public class Evaluator {
         }
         return res;
     }
-
-
-    private static void opUnaris(Token t) {
-
-    }
-
 }
 
 
