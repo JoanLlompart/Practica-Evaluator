@@ -143,13 +143,16 @@ public class Evaluator {
                  */
 
                 if (t.getTk() == '$') {
-                    pila.add(pila.pop() * -1);
+                    //pila.add(pila.pop() * -1);
+                    return res = tempPila * -1;
                 }
-
+/*
                 res = tempPila;
                 if (t.getTk() == '-' ) {
                     return res = - res;
                 }
+
+ */
 
 
 

@@ -225,13 +225,10 @@ public class Token {
     }
 
     private static boolean identificarUnari(ArrayList<Token> tokens, boolean tkUnari, char c , int i) {
-        //Se verifica si el guión está en la posición inicial de la expresión (i == 0),
-        // si el último token agregado es una operación (tokens.get(tokens.size() - 1).getTtype() == Toktype.OP)
-        // o si el último token agregado es un paréntesis de apertura
-        // Si se cumple alguna de estas condiciones,
-        // se agrega un token para indicar que se trata de una operación unaria (tokOp('$')),
-        // se establece una variable booleana isUnary en true
-        // y se continúa con el siguiente carácter en la expresión.
+        // hem de mirar que si el simbol esta a la primera posicio sera '$' i  unari
+        // Si antes de el token actual tenim un parentesis = '$' i unari
+        // Si el token actual antes tenim un altre operador de multiplicacio o divisio sera el menos sustituit per '$'
+
 
         if ( c == '-') {
             if (i == 0 || tokens.get(tokens.size() -1).getTtype() == Toktype.OP || tokens.get(tokens.size() -1).getTk() == '(') {
