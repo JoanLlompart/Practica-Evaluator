@@ -18,6 +18,7 @@ public class Evaluator {
         // Efectua el procediment per convertir la llista de tokens en notació RPN(NOTACIO POLACA INVERSA)
         for (Token t:tokens) {
             if (t.getTtype()== Token.Toktype.NUMBER) {
+
                 //afegim el nombre a la cua de sortida
                 sortida.add(t);
             } else if (t.getTtype()== Token.Toktype.OP ) {
@@ -139,12 +140,15 @@ public class Evaluator {
                 }
                 // despres tornam  a posar el operand a la dreta.
                 pila.push(tempPila);
-
                  */
+
+                if (t.getTk() == '$') {
+                    pila.add(pila.pop() * -1);
+                }
 
                 res = tempPila;
                 if (t.getTk() == '-' ) {
-                     return res = - res;
+                    return res = - res;
                 }
 
 
@@ -155,7 +159,6 @@ public class Evaluator {
                     int element = pila.pop();
                     res = res * 10 + element;
                 }
-
                  */
 
             }
@@ -203,66 +206,3 @@ public class Evaluator {
         return res;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

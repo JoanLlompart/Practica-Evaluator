@@ -107,6 +107,8 @@ public class Token {
         ArrayList<Token> tokens = new ArrayList<>();
 
         String number;
+        //boolean que indica si el signe es unari o no ho es.
+        boolean tkUnari = false;
 
         for (int i = 0; i < expr.length(); i++) {
             char c = expr.charAt(i);
@@ -140,7 +142,36 @@ public class Token {
                 //reinicia la variable number.
             } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') { // n es el operador unari.
 
-                /*int següent = i +1;
+                //Se verifica si el guión está en la posición inicial de la expresión (i == 0),
+                // si el último token agregado es una operación (tokens.get(tokens.size() - 1).getTtype() == Toktype.OP)
+                // o si el último token agregado es un paréntesis de apertura 
+                // Si se cumple alguna de estas condiciones, 
+                // se agrega un token para indicar que se trata de una operación unaria (tokOp('$')),
+                // se establece una variable booleana isUnary en true 
+                // y se continúa con el siguiente carácter en la expresión.
+                tkUnari= identificarUnari(tokens,tkUnari,c,i);
+
+                /*
+                if ( c == '-') {
+
+                    if (i == 0) {
+                        tokens.add(tokOp('$'));
+                        tkUnari= true;
+                        continue;
+                    } else if (tokens.get(tokens.size() -1).getTtype() == Toktype.OP) {
+                        tokens.add(tokOp('$'));
+                        tkUnari= true;
+                        continue;
+                    } else if (tokens.get(tokens.size() -1).getTk() == '(') {
+                        tokens.add(tokOp('$'));
+                        tkUnari= true;
+                        continue;
+                    }
+                }
+
+                 */
+                /*
+                int següent = i +1;
                 int anterior = i -1;
                 //Si el valor negatiu esta a la primera posicio
                 if (c == '-' && i == 0) {
@@ -152,8 +183,12 @@ public class Token {
                 }
 
                  */
-                //Afegeix els tokens que son operadors a tokOp.
-                tokens.add(tokOp(c));
+
+
+                if (!tkUnari) {
+                    //Afegeix els tokens que son operadors a tokOp.
+                    tokens.add(tokOp(c));
+                }
 
 
                /*if (tokens.get(i).getValue() == '-') {
@@ -189,15 +224,36 @@ public class Token {
         return tokens.toArray(new Token[0]);
     }
 
-    private static void identificarUnari(ArrayList<Token> tokens, String expr, char c , int i) {
-       // if (c == '-')
+    private static boolean identificarUnari(ArrayList<Token> tokens, boolean tkUnari, char c , int i) {
+        //Se verifica si el guión está en la posición inicial de la expresión (i == 0),
+        // si el último token agregado es una operación (tokens.get(tokens.size() - 1).getTtype() == Toktype.OP)
+        // o si el último token agregado es un paréntesis de apertura
+        // Si se cumple alguna de estas condiciones,
+        // se agrega un token para indicar que se trata de una operación unaria (tokOp('$')),
+        // se establece una variable booleana isUnary en true
+        // y se continúa con el siguiente carácter en la expresión.
+
+        if ( c == '-') {
+            if (i == 0 || tokens.get(tokens.size() -1).getTtype() == Toktype.OP || tokens.get(tokens.size() -1).getTk() == '(') {
+                tokens.add(tokOp('$'));
+                return tkUnari= true;
+            } else {
+                //si no es cap de els casos anteriors pasa a false
+               return tkUnari = false;
+            }
+        } else {
+            //si no es un signe negatiu, no es unari
+            return tkUnari = false;
+        }
+
+        /*// if (c == '-')
         int següent = i +1;
         int anterior = i -1;
         int tok = tokens.get(i).getValue();
         // hem de mirar que si el simbol esta a la primera posicio sera 'n'
         // Si antes de el token actual tenim un parentesis = 'n'
         // Si el token actual antes tenim un altre operador de multiplicacio o divisio sera el menos sustituit per 'n'
-        
+
         if (tokens.get(anterior).getValue() == '(') {
             tokens.add(tokOp('$'));
         } else if (tokens.get(anterior).getValue() == '*' ) {
@@ -209,6 +265,8 @@ public class Token {
         } else {
             tokens.add(tokOp('$'));
         }
+
+         */
     }
 
 
@@ -229,4 +287,3 @@ public class Token {
         return new String[]{number, String.valueOf(i)};
     }
 }
-
