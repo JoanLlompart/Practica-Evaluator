@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 
@@ -43,6 +44,7 @@ public class Evaluator {
             // el pasa a el final de sortida
             sortida.add(operandorStack.pop());
         }
+
 
         // Finalment, crida a calcRPN amb la nova llista de tokens i torna el resultat
         Token[] list = sortida.toArray(new Token[sortida.size()]);
@@ -145,9 +147,14 @@ public class Evaluator {
 
                 if (t.getTk() == '$') {
                     //pila.add(pila.pop() * -1);
+
                     if (pila.isEmpty()) {
                         // si la pila esta buida
-                        return res = tempPila * -1;
+                        //return res = tempPila * -1;
+                        res = tempPila * -1;
+                        pila.push(res);
+                        continue;
+
                     } else {
                         pila.pop();
                         res = tempPila * -1;
@@ -233,7 +240,6 @@ public class Evaluator {
                 //Math pow retorna un double per aixo mateix feim el cast a int
                 res = (int) Math.pow(elEsq,elDret);
                 break;
-
             default:
                 throw new RuntimeException("Operador no reconegut");
         }
