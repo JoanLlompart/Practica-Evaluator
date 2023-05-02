@@ -184,6 +184,7 @@ public class Evaluator {
             if (t.getTtype() == Token.Toktype.NUMBER) {
                 pila.push(t.getValue());
             } else {
+
                 //Si no es un NUMBER, es de tipus operador.
                 //Amb pop() treim el element de amunt de la pila i el guada a la variable elDret/Esq.
                 int elDret = pila.pop();
@@ -193,22 +194,23 @@ public class Evaluator {
                     int elEsq = pila.pop();
                     res = calcOper(t,res,elEsq,elDret);
                 }
-                /*if (pila.isEmpty()) {
-                    res += elDret;
-                } else if (pila.size() == 1){
-                    int elEsq = pila.pop();
-                    res = calcOper(t,res,elEsq,elDret);
-                    return res;
-                } else {
-                    int elEsq = pila.pop();
-                    res = calcOper(t,res,elEsq,elDret);
-                    pila.push(res);
+
+
+
+
+/*
+                int elDret = pila.pop();
+                int elEsq = pila.pop();
+                // Verificar si el siguiente elemento en la pila es un número negativo y hay un operador antes de ese número
+                if (elDret < 0 && !pila.empty() && pila.peek() == -1) {
+                    pila.pop();
+                    elDret = -elDret;
+                    elEsq = -pila.pop();
                 }
-                 */
+                res = calcOper(t,res,elEsq,elDret);
 
 
-
-
+ */
                 // res guarda el resultat de calOper,
                 // que se encarrega de transformar RPN a normal i calcula el resultat.
                 //res = calcOper(t,res,elEsq,elDret);
@@ -239,6 +241,9 @@ public class Evaluator {
             case '^':
                 //Math pow retorna un double per aixo mateix feim el cast a int
                 res = (int) Math.pow(elEsq,elDret);
+                break;
+            case '$':
+                res = -elDret;
                 break;
             default:
                 throw new RuntimeException("Operador no reconegut");
