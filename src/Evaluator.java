@@ -127,6 +127,7 @@ public class Evaluator {
             if (pila.size() == 1 && t.getTtype() == Token.Toktype.OP) {
                 //tempPila guarda el numero que queda a la pila i elimina el valor de la pila.
                 int tempPila =pila.pop();
+                //int tempPila =pila.peek();
                 //amb la pila buida afegim el element de OP en aquest cas nomes pot ser (-+)
                 //falta afegir un control perque nomes accepti negatius o positius
                 //pila.push((int) t.getTk());
@@ -144,7 +145,15 @@ public class Evaluator {
 
                 if (t.getTk() == '$') {
                     //pila.add(pila.pop() * -1);
-                    return res = tempPila * -1;
+                    if (pila.isEmpty()) {
+                        // si la pila esta buida
+                        return res = tempPila * -1;
+                    } else {
+                        pila.pop();
+                        res = tempPila * -1;
+                        pila.add(res);
+                    }
+
                 }
 /*
                 res = tempPila;
@@ -171,11 +180,31 @@ public class Evaluator {
                 //Si no es un NUMBER, es de tipus operador.
                 //Amb pop() treim el element de amunt de la pila i el guada a la variable elDret/Esq.
                 int elDret = pila.pop();
-                int elEsq = pila.pop();
+                if (pila.isEmpty()) {
+                    res += elDret;
+                } else {
+                    int elEsq = pila.pop();
+                    res = calcOper(t,res,elEsq,elDret);
+                }
+                /*if (pila.isEmpty()) {
+                    res += elDret;
+                } else if (pila.size() == 1){
+                    int elEsq = pila.pop();
+                    res = calcOper(t,res,elEsq,elDret);
+                    return res;
+                } else {
+                    int elEsq = pila.pop();
+                    res = calcOper(t,res,elEsq,elDret);
+                    pila.push(res);
+                }
+                 */
+
+
+
 
                 // res guarda el resultat de calOper,
                 // que se encarrega de transformar RPN a normal i calcula el resultat.
-                res = calcOper(t,res,elEsq,elDret);
+                //res = calcOper(t,res,elEsq,elDret);
                 //Realitza push a la pila del valor resultat
                 pila.push(res);
             }
@@ -185,6 +214,7 @@ public class Evaluator {
     }
 
     private static int calcOper(Token t, int res, int elEsq, int elDret) {
+
         switch (t.getTk()) {
             case '+':
                 //realitza la suma de forma normal
@@ -203,6 +233,7 @@ public class Evaluator {
                 //Math pow retorna un double per aixo mateix feim el cast a int
                 res = (int) Math.pow(elEsq,elDret);
                 break;
+
             default:
                 throw new RuntimeException("Operador no reconegut");
         }
