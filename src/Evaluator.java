@@ -124,7 +124,7 @@ public class Evaluator {
 
         //Variable per anar guardant el resultat
         int res = 0;
-
+        int contNeg = 0;
         for (Token t: list) {
             if (pila.size() == 1 && t.getTtype() == Token.Toktype.OP) {
                 //tempPila guarda el numero que queda a la pila i elimina el valor de la pila.
@@ -147,11 +147,12 @@ public class Evaluator {
 
                 if (t.getTk() == '$') {
                     //pila.add(pila.pop() * -1);
-
+                    contNeg++;
                     if (pila.isEmpty()) {
                         // si la pila esta buida
                         //return res = tempPila * -1;
                         res = tempPila * -1;
+                        pila.push(tempPila);
                         pila.push(res);
                         continue;
 
@@ -190,9 +191,12 @@ public class Evaluator {
                 int elDret = pila.pop();
                 if (pila.isEmpty()) {
                     res += elDret;
+                } else if (contNeg > 1) {
+                    res += elDret;
                 } else {
                     int elEsq = pila.pop();
                     res = calcOper(t,res,elEsq,elDret);
+                    //pila.push(elEsq);
                 }
 
 
