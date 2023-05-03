@@ -152,7 +152,8 @@ public class Evaluator {
                         // si la pila esta buida
                         //return res = tempPila * -1;
                         res = tempPila * -1;
-                        pila.push(tempPila);
+                        //torna a afegir el element que eliminam amb el pop (mirar si amb peek puc eliminar aixo)
+                        pila.push(tempPila * -1);
                         pila.push(res);
                         continue;
 
