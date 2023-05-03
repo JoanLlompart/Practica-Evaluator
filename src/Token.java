@@ -8,8 +8,10 @@ public class Token {
         NUMBER, OP, PAREN
     }
 
-    // Pensa a implementar els "getters" d'aquests atributs.
-    private Toktype ttype; //opercio,parentesis,numero
+    // Declaració de els atributs
+
+    //opercio,parentesis,numero
+    private Toktype ttype;
     private int value;
     private char tk;
 
@@ -17,15 +19,18 @@ public class Token {
         return ttype;
     }
 
+    // Dona el valor de el Number ja que es l'unic que el pot utilitzar
     public int getValue() {
         return value;
     }
 
+    //Utilitzat per parentesis i operadors
     public char getTk() {
         return tk;
     }
 
-    // Constructor privat. Evita que es puguin construir objectes Token externament
+    // Constructor privat.
+    // Evita que es puguin construir objectes Token externament
     private Token() {
 
     }
@@ -117,8 +122,6 @@ public class Token {
             //Reiniciam la variable number per poder guardar el proxim nombre sencer
             number = "";
 
-
-
             if (caracter) {
                 // SI es un DIGIT juntar concatenar a un String temporal,
                 // Una vegada tenim tots els Digits consecutius  els pasam a TokNumber i
@@ -137,20 +140,17 @@ public class Token {
                 tokens.add(tokNumber(Integer.parseInt(number)));
 
             } else if (c == '(' || c == ')') {
-                //guardaDigits(number,tokens);
+                //Si troba parentesis se declara com tokParen i se afegeix a la llista de Tokens
                 tokens.add(tokParen(c));
-                //reinicia la variable number.
             } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') { // n es el operador unari.
-
-                //Se verifica si el guión está en la posición inicial de la expresión (i == 0),
-                // si el último token agregado es una operación (tokens.get(tokens.size() - 1).getTtype() == Toktype.OP)
-                // o si el último token agregado es un paréntesis de apertura 
-                // Si se cumple alguna de estas condiciones, 
-                // se agrega un token para indicar que se trata de una operación unaria (tokOp('$')),
-                // se establece una variable booleana isUnary en true 
-                // y se continúa con el siguiente carácter en la expresión.
+                //Es verifica si el guió és a la posició inicial de l'expressió (i == 0),
+                // si el darrer token agregat és una operació (tokens.get(tokens.size() - 1).getTtype() == Toktype.OP)
+                // o si el darrer token agregat és un parèntesi d'obertura
+                // Si es compleix alguna d'aquestes condicions,
+                // s'afegeix un token per indicar que es tracta d'una operació unària (tokOp('$')),
+                // s'estableix una variable booleana isUnary en true
+                // i es continua amb el caràcter següent en l'expressió.
                 tkUnari= identificarUnari(tokens,tkUnari,c,i);
-
 
                 /*
                 if ( c == '-') {

@@ -18,6 +18,7 @@ public class Evaluator {
 
         // Efectua el procediment per convertir la llista de tokens en notació RPN(NOTACIO POLACA INVERSA)
         for (Token t:tokens) {
+
             if (t.getTtype()== Token.Toktype.NUMBER) {
 
                 //afegim el nombre a la cua de sortida
@@ -102,7 +103,6 @@ public class Evaluator {
             //els elevats tenen preferencia de valor 3.
             case '^':
                 return 3;
-
             case '(',')':
                 return 0;
             case '$' :
@@ -111,8 +111,6 @@ public class Evaluator {
 
             default:
                 throw new RuntimeException("No se ha pogut determinar la preferencia perque el operador no es valid");
-
-
         }
 
     }
@@ -124,9 +122,12 @@ public class Evaluator {
 
         //Variable per anar guardant el resultat
         int res = 0;
-        int contNeg = 0;
         int tempPila;
+        boolean negativoEncontrado = false;
         for (Token t: list) {
+            if (pila.isEmpty() && t.getTtype() == Token.Toktype.OP && t.getTk() != '$') {
+                throw new IllegalArgumentException("Expresión mal formada: operador sin operandos");
+            }
             if (pila.size() == 1 && t.getTtype() == Token.Toktype.OP) {
                 //tempPila guarda el numero que queda a la pila i elimina el valor de la pila.
                 tempPila =pila.pop();
@@ -148,7 +149,7 @@ public class Evaluator {
 
                 if (t.getTk() == '$') {
                     //pila.add(pila.pop() * -1);
-                    contNeg++;
+
                     if (pila.isEmpty()) {
                         // si la pila esta buida
                         //return res = tempPila * -1;
@@ -162,26 +163,10 @@ public class Evaluator {
                         pila.pop();
                         res = tempPila * -1;
                         pila.add(res);
+
                     }
-
+                    negativoEncontrado = true;
                 }
-/*
-                res = tempPila;
-                if (t.getTk() == '-' ) {
-                    return res = - res;
-                }
-
- */
-
-
-
-                //res = ;
-                /*
-                while (!pila.empty()) {
-                    int element = pila.pop();
-                    res = res * 10 + element;
-                }
-                 */
 
             }
             if (t.getTtype() == Token.Toktype.NUMBER) {
@@ -192,26 +177,19 @@ public class Evaluator {
                 //pila.push(elDret);
                 pila.push(elDret * -1);
 
-
             } else {
-
                 //Si no es un NUMBER, es de tipus operador.
                 //Amb pop() treim el element de amunt de la pila i el guada a la variable elDret/Esq.
 
                 int elDret = pila.pop();
                 if (pila.isEmpty()) {
                     res += elDret;
-                } else if (contNeg > 1) {
+                } else if (negativoEncontrado) {
                     res += elDret;
                 } else {
                     int elEsq = pila.pop();
                     res = calcOper(t,res,elEsq,elDret);
-                    //pila.push(elEsq);
                 }
-
-
-
-
 /*
                 int elDret = pila.pop();
                 int elEsq = pila.pop();
@@ -222,8 +200,6 @@ public class Evaluator {
                     elEsq = -pila.pop();
                 }
                 res = calcOper(t,res,elEsq,elDret);
-
-
  */
                 // res guarda el resultat de calOper,
                 // que se encarrega de transformar RPN a normal i calcula el resultat.
@@ -235,7 +211,6 @@ public class Evaluator {
         //Treu els valors que queden a la pila que sera el resultat.
         return pila.pop();
     }
-
     private static int calcOper(Token t, int res, int elEsq, int elDret) {
 
         switch (t.getTk()) {
