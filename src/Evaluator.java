@@ -125,10 +125,11 @@ public class Evaluator {
         //Variable per anar guardant el resultat
         int res = 0;
         int contNeg = 0;
+        int tempPila;
         for (Token t: list) {
             if (pila.size() == 1 && t.getTtype() == Token.Toktype.OP) {
                 //tempPila guarda el numero que queda a la pila i elimina el valor de la pila.
-                int tempPila =pila.pop();
+                tempPila =pila.pop();
                 //int tempPila =pila.peek();
                 //amb la pila buida afegim el element de OP en aquest cas nomes pot ser (-+)
                 //falta afegir un control perque nomes accepti negatius o positius
@@ -185,10 +186,18 @@ public class Evaluator {
             }
             if (t.getTtype() == Token.Toktype.NUMBER) {
                 pila.push(t.getValue());
+            } else if (t.getTk() == '$' && pila.size() >1) {
+                int elDret = pila.pop();
+                int elEsq = pila.pop();
+                pila.push(elDret);
+                pila.push(elEsq * -1);
+
+
             } else {
 
                 //Si no es un NUMBER, es de tipus operador.
                 //Amb pop() treim el element de amunt de la pila i el guada a la variable elDret/Esq.
+
                 int elDret = pila.pop();
                 if (pila.isEmpty()) {
                     res += elDret;
