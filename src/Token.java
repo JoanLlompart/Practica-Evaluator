@@ -128,7 +128,7 @@ public class Token {
                 // despres ficar a una posicio de el ArrayList
 
 
-                String[] arTemp = afegirNumeros(caracter, i, number, c, expr);
+                String[] arTemp = afegirNumeros(i, number, c, expr);
                 i = Integer.parseInt(arTemp[1]);
                 number = arTemp[0];
 
@@ -237,6 +237,7 @@ public class Token {
                 return tkUnari= true;
             } else {
                 //si no es cap de els casos anteriors pasa a false
+                //perque no es unari , es un operador de resta.
                return tkUnari = false;
             }
         } else {
@@ -268,7 +269,7 @@ public class Token {
     }
 
 
-    private static String[] afegirNumeros(boolean caracter, int i, String number, char c, String expr) {
+    private static String[] afegirNumeros(int i, String number, char c, String expr) {
         //Menter caracter sigui True continua iterant el bucle.
         while (Character.isDigit(expr.charAt(i))) {
             //Afegim el caracter.

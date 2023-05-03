@@ -46,7 +46,6 @@ public class Evaluator {
             sortida.add(operandorStack.pop());
         }
 
-
         // Finalment, crida a calcRPN amb la nova llista de tokens i torna el resultat
         Token[] list = sortida.toArray(new Token[sortida.size()]);
 
@@ -96,19 +95,19 @@ public class Evaluator {
             // sumes i restes tenen la preferencia mes baixa
             case '+','-':
                 return 1;
-
             //Multiplicacio divisio i porcentatge tenen preferencia de valor 2
             case '*','%','/':
                 return 2;
             //els elevats tenen preferencia de valor 3.
             case '^':
                 return 3;
+
+            //Els parentesis com se han de eliminar tenen valor de preferencia 0 perque agafi el altre
             case '(',')':
                 return 0;
+                //El $ te la maxima preferencia i ja que se ha de asignar el valor negatiu.
             case '$' :
                 return 4;
-
-
             default:
                 throw new RuntimeException("No se ha pogut determinar la preferencia perque el operador no es valid");
         }
@@ -123,33 +122,17 @@ public class Evaluator {
         //Variable per anar guardant el resultat
         int res = 0;
         int tempPila;
-        boolean negativoEncontrado = false;
+        boolean negatiuTrobat = false;
         for (Token t: list) {
+
             if (pila.isEmpty() && t.getTtype() == Token.Toktype.OP && t.getTk() != '$') {
-                throw new IllegalArgumentException("Expresión mal formada: operador sin operandos");
+                throw new IllegalArgumentException("Falta operador per el operand");
             }
             if (pila.size() == 1 && t.getTtype() == Token.Toktype.OP) {
                 //tempPila guarda el numero que queda a la pila i elimina el valor de la pila.
                 tempPila =pila.pop();
-                //int tempPila =pila.peek();
                 //amb la pila buida afegim el element de OP en aquest cas nomes pot ser (-+)
-                //falta afegir un control perque nomes accepti negatius o positius
-                //pila.push((int) t.getTk());
-
-                /*
-                if (t.getTk() == '-') {
-                    pila.push((int) '-');
-                }
-                if (t.getTk() == '+') {
-                    pila.push((int) '+');
-                }
-                // despres tornam  a posar el operand a la dreta.
-                pila.push(tempPila);
-                 */
-
                 if (t.getTk() == '$') {
-                    //pila.add(pila.pop() * -1);
-
                     if (pila.isEmpty()) {
                         // si la pila esta buida
                         //return res = tempPila * -1;
@@ -165,7 +148,7 @@ public class Evaluator {
                         pila.add(res);
 
                     }
-                    negativoEncontrado = true;
+                    negatiuTrobat = true;
                 }
 
             }
@@ -183,11 +166,15 @@ public class Evaluator {
 
                 int elDret = pila.pop();
                 if (pila.isEmpty()) {
+                    // res guarda el resultat de calOper,
+                    // que se encarrega de transformar RPN a normal i calcula el resultat.
                     res += elDret;
-                } else if (negativoEncontrado) {
+                } else if (negatiuTrobat) {
                     res += elDret;
                 } else {
                     int elEsq = pila.pop();
+                    // res guarda el resultat de calOper,
+                    // que se encarrega de transformar RPN a normal i calcula el resultat.
                     res = calcOper(t,res,elEsq,elDret);
                 }
 /*
@@ -201,8 +188,7 @@ public class Evaluator {
                 }
                 res = calcOper(t,res,elEsq,elDret);
  */
-                // res guarda el resultat de calOper,
-                // que se encarrega de transformar RPN a normal i calcula el resultat.
+
                 //res = calcOper(t,res,elEsq,elDret);
                 //Realitza push a la pila del valor resultat
                 pila.push(res);
