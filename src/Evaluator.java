@@ -188,9 +188,9 @@ public class Evaluator {
                 pila.push(t.getValue());
             } else if (t.getTk() == '$' && pila.size() >1) {
                 int elDret = pila.pop();
-                int elEsq = pila.pop();
-                pila.push(elDret);
-                pila.push(elEsq * -1);
+                //int elEsq = pila.pop();
+                //pila.push(elDret);
+                pila.push(elDret * -1);
 
 
             } else {
