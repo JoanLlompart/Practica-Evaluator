@@ -45,8 +45,6 @@ public class Token {
 
     // Torna un token de tipus "OP"
     static Token tokOp(char c) {
-        //Toktype op = Token.tokOp(c);
-        //return new Token(Toktype.OP,Character.toString(c));
         Token t = new Token();
         t.ttype = Toktype.OP;
         t.tk = c;
@@ -77,34 +75,6 @@ public class Token {
         Token token = (Token) o;
         return ttype == token.ttype && value == token.value && tk == token.tk;
     }
-
-
-
-    /*
-    public boolean equals(Object o) {
-            //Lo guardamos en token other
-            Token other = (Token) o;
-           if (this.ttype != other.ttype) {
-               return false;
-           }
-           if (this.ttype == Toktype.OP) {
-               return this.tk == other.tk;
-           }
-           if (this.ttype == Toktype.PAREN) {
-               return this.tk == other.tk;
-           }
-           if (this.ttype == Toktype.NUMBER) {
-               return this.value == other.value;
-           }
-        return false;
-
-            //Y devolvemos true si todos los atributos son iguales
-            //return this.ttype == other.ttype && this.value == other.value && this.tk == other.tk;
-    }
-
-     */
-
-
 
     // A partir d'un String, torna una llista de tokens
     public static Token[] getTokens(String expr) {

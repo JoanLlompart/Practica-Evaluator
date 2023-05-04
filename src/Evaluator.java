@@ -70,7 +70,7 @@ public class Evaluator {
                 //Si el Stack te dos o mes elements podrem mirar el token que tenim a la segona posicio de
                 // el cap. Per poder eliminar valos i tornalos a ficar
                 if (operandorStack.size() >= 2) {
-                    char proxCap =operandorStack.get(1).getTk();
+                    operandorStack.get(1).getTk();
                 }
                 //si el proxim token es un parentesis  de obertura el eliminarem
                 if (capDePila == '(' || capDePila == ')') {
@@ -101,7 +101,7 @@ public class Evaluator {
             //Els parentesis com se han de eliminar tenen valor de preferencia 0 perque agafi el altre
             case '(',')':
                 return 0;
-                //El $ te la maxima preferencia i ja que se ha de asignar el valor negatiu.
+            //El $ te la maxima preferencia i ja que se ha de asignar el valor negatiu.
             case '$' :
                 return 4;
 
@@ -188,7 +188,7 @@ public class Evaluator {
             case '-':
                 res = elEsq - elDret;
                 break;
-                //revisar si res elimina el valor restant en el cas de 3
+            //revisar si res elimina el valor restant en el cas de 3
             case '*':
                 res = elEsq * elDret;
                 break;
