@@ -189,7 +189,6 @@ public class Evaluator {
                 res = calcOper(t,res,elEsq,elDret);
  */
 
-                //res = calcOper(t,res,elEsq,elDret);
                 //Realitza push a la pila del valor resultat
                 pila.push(res);
             }
@@ -217,9 +216,11 @@ public class Evaluator {
                 //Math pow retorna un double per aixo mateix feim el cast a int
                 res = (int) Math.pow(elEsq,elDret);
                 break;
-            case '$':
+            /*case '$':
                 res = -elDret;
                 break;
+
+             */
             default:
                 throw new RuntimeException("Operador no reconegut");
         }
