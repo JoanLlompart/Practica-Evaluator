@@ -23,8 +23,8 @@ public class Evaluator {
 
                 //afegim el nombre a la cua de sortida
                 sortida.add(t);
-            } else if (t.getTtype()== Token.Toktype.OP ) {
-                while (!operandorStack.isEmpty() && preferencia(t) <= preferencia(operandorStack.peek())) {
+            } else if (t.getTtype() == Token.Toktype.OP ) {
+                while (!operandorStack.isEmpty() && preferencia(t) <= preferencia(operandorStack.peek()) ) {
                     // Afegim a sortida el operador amb el metode pop
                     // que extreu el operador que esta al cap i el elimina.
                     sortida.add(operandorStack.pop());
@@ -84,7 +84,7 @@ public class Evaluator {
             //treu el parèntesi esquerra ('(') de la pila d'operadors
 
             // (REVISAR)
-            //if (t.getTk() == '(') operandorStack.pop();
+            if (t.getTk() == '(') operandorStack.pop();
         }
     }
 
@@ -95,8 +95,8 @@ public class Evaluator {
             // sumes i restes tenen la preferencia mes baixa
             case '+','-':
                 return 1;
-            //Multiplicacio divisio i porcentatge tenen preferencia de valor 2
-            case '*','%','/':
+            //MultiplicacioI  divisio tenen preferencia de valor 2
+            case '*','/':
                 return 2;
             //els elevats tenen preferencia de valor 3.
             case '^':
@@ -105,6 +105,8 @@ public class Evaluator {
             //Els parentesis com se han de eliminar tenen valor de preferencia 0 perque agafi el altre
             case '(',')':
                 return 0;
+
+
                 //El $ te la maxima preferencia i ja que se ha de asignar el valor negatiu.
             case '$' :
                 return 4;

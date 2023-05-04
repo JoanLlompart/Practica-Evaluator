@@ -108,8 +108,6 @@ public class Token {
 
     // A partir d'un String, torna una llista de tokens
     public static Token[] getTokens(String expr) {
-        //Elimina els espais en blanc de el String
-        //expr = expr.replace(" ","");
         ArrayList<Token> tokens = new ArrayList<>();
 
         String number;
@@ -177,7 +175,7 @@ public class Token {
             } else {
                 //si no es cap de els casos anteriors pasa a false
                 //perque no es unari , es un operador de resta.
-               return tkUnari = false;
+                return tkUnari = false;
             }
         } else {
             //si no es un signe negatiu, no es unari
