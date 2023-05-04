@@ -118,7 +118,6 @@ public class Token {
 
         for (int i = 0; i < expr.length(); i++) {
             char c = expr.charAt(i);
-            //int asciiValue = (int) c;
             boolean caracter = Character.isDigit(c);
             //Reiniciam la variable number per poder guardar el proxim nombre sencer
             number = "";
@@ -127,16 +126,13 @@ public class Token {
                 // SI es un DIGIT juntar concatenar a un String temporal,
                 // Una vegada tenim tots els Digits consecutius  els pasam a TokNumber i
                 // despres ficar a una posicio de el ArrayList
-
-
                 String[] arTemp = afegirNumeros(i, number, c, expr);
                 i = Integer.parseInt(arTemp[1]);
                 number = arTemp[0];
-
-
                 //Anteriorment a la funcio afegirNumeros li hem incrementat per mirar la seguent
                 //posicio i ara li decrementam, per no saltar caracters.
                 i--;
+
                 // Afegim a el la llista tokens el Token de tipo número
                 tokens.add(tokNumber(Integer.parseInt(number)));
 
@@ -153,56 +149,10 @@ public class Token {
                 // i es continua amb el caràcter següent en l'expressió.
                 tkUnari= identificarUnari(tokens,tkUnari,c,i);
 
-                /*
-                if ( c == '-') {
-
-                    if (i == 0) {
-                        tokens.add(tokOp('$'));
-                        tkUnari= true;
-                        continue;
-                    } else if (tokens.get(tokens.size() -1).getTtype() == Toktype.OP) {
-                        tokens.add(tokOp('$'));
-                        tkUnari= true;
-                        continue;
-                    } else if (tokens.get(tokens.size() -1).getTk() == '(') {
-                        tokens.add(tokOp('$'));
-                        tkUnari= true;
-                        continue;
-                    }
-                }
-
-                 */
-                /*
-                int següent = i +1;
-                int anterior = i -1;
-                //Si el valor negatiu esta a la primera posicio
-                if (c == '-' && i == 0) {
-                    tokOp('$');
-                } else if (c == '-' && anterior == '(') {
-                    tokOp('$');
-                } else if (c == '-' && anterior == '/' || c == '-' && anterior == '*') {
-                    tokOp('$');
-                }
-
-                 */
-
-
                 if (!tkUnari) {
                     //Afegeix els tokens que son operadors a tokOp.
                     tokens.add(tokOp(c));
                 }
-
-
-               /*if (tokens.get(i).getValue() == '-') {
-                    identificarUnari(tokens,expr,c, i);
-                } else {
-                    //Afegeix els tokens que son operadors a tokOp.
-                    tokens.add(tokOp(c));
-                }
-
-                */
-
-
 
             } else if (c == ' ') {
                 //Si te un espai hem de cambiar de token
@@ -212,17 +162,6 @@ public class Token {
                 throw new RuntimeException("Caracter no identificat." + c);
             }
         }
-        // Versio antes de optimitzar el return :
-        //return tokens.toArray((new Token[tokens.size()]));
-
-        /*
-        Versio mes optimitzada de el return:
-        Perque esta mes optimitzada:
-        el mètode toArray determina automàticament la longitud del array necessari,
-         i el crea internament.
-         En fer-ho, s'elimina la necessitat de crear un nou array de Token i copiar els elements de la llista,
-         la qual cosa hauria de millorar el rendiment.
-         */
         return tokens.toArray(new Token[0]);
     }
 
@@ -230,7 +169,6 @@ public class Token {
         // hem de mirar que si el simbol esta a la primera posicio sera '$' i  unari
         // Si antes de el token actual tenim un parentesis = '$' i unari
         // Si el token actual antes tenim un altre operador de multiplicacio o divisio sera el menos sustituit per '$'
-
 
         if ( c == '-') {
             if (i == 0 || tokens.get(tokens.size() -1).getTtype() == Toktype.OP || tokens.get(tokens.size() -1).getTk() == '(') {
@@ -245,30 +183,7 @@ public class Token {
             //si no es un signe negatiu, no es unari
             return tkUnari = false;
         }
-
-        /*// if (c == '-')
-        int següent = i +1;
-        int anterior = i -1;
-        int tok = tokens.get(i).getValue();
-        // hem de mirar que si el simbol esta a la primera posicio sera 'n'
-        // Si antes de el token actual tenim un parentesis = 'n'
-        // Si el token actual antes tenim un altre operador de multiplicacio o divisio sera el menos sustituit per 'n'
-
-        if (tokens.get(anterior).getValue() == '(') {
-            tokens.add(tokOp('$'));
-        } else if (tokens.get(anterior).getValue() == '*' ) {
-            tokens.add(tokOp('$'));
-        } else if (tokens.get(anterior).getValue() == '/') {
-            tokens.add(tokOp('$'));
-        } else if (i == 0) {
-            tokens.add(tokOp('$'));
-        } else {
-            tokens.add(tokOp('$'));
-        }
-
-         */
     }
-
 
     private static String[] afegirNumeros(int i, String number, char c, String expr) {
         //Menter caracter sigui True continua iterant el bucle.

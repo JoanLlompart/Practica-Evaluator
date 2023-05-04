@@ -180,7 +180,7 @@ public class Evaluator {
 /*
                 int elDret = pila.pop();
                 int elEsq = pila.pop();
-                // Verificar si el siguiente elemento en la pila es un número negativo y hay un operador antes de ese número
+                // Verifica si el següent element de la pila és un número negatiu i hi ha un operador antes de aquest número
                 if (elDret < 0 && !pila.empty() && pila.peek() == -1) {
                     pila.pop();
                     elDret = -elDret;
@@ -188,7 +188,6 @@ public class Evaluator {
                 }
                 res = calcOper(t,res,elEsq,elDret);
  */
-
                 //Realitza push a la pila del valor resultat
                 pila.push(res);
             }
@@ -206,6 +205,7 @@ public class Evaluator {
             case '-':
                 res = elEsq - elDret;
                 break;
+                //revisar si res elimina el valor restant en el cas de 3
             case '*':
                 res = elEsq * elDret;
                 break;
@@ -219,7 +219,6 @@ public class Evaluator {
             /*case '$':
                 res = -elDret;
                 break;
-
              */
             default:
                 throw new RuntimeException("Operador no reconegut");
