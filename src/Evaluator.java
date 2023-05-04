@@ -101,11 +101,11 @@ public class Evaluator {
             //Els parentesis com se han de eliminar tenen valor de preferencia 0 perque agafi el altre
             case '(',')':
                 return 0;
-
-
                 //El $ te la maxima preferencia i ja que se ha de asignar el valor negatiu.
             case '$' :
                 return 4;
+
+
             default:
                 throw new RuntimeException("No se ha pogut determinar la preferencia perque el operador no es valid");
         }
@@ -120,7 +120,6 @@ public class Evaluator {
         //Variable per anar guardant el resultat
         int res = 0;
         int tempPila;
-        boolean negatiuTrobat = false;
         for (Token t: list) {
 
             if (pila.isEmpty() && t.getTtype() == Token.Toktype.OP && t.getTk() != '$') {
@@ -146,28 +145,24 @@ public class Evaluator {
                         pila.add(res);
 
                     }
-                    negatiuTrobat = true;
                 }
 
             }
             if (t.getTtype() == Token.Toktype.NUMBER) {
+                //afegim directament el valor a la pila
                 pila.push(t.getValue());
             } else if (t.getTk() == '$' && pila.size() >1) {
                 int elDret = pila.pop();
-                //int elEsq = pila.pop();
-                //pila.push(elDret);
+                //pasam el numero a negatiu multiplicantlo per menys un.
                 pila.push(elDret * -1);
 
             } else {
                 //Si no es un NUMBER, es de tipus operador.
                 //Amb pop() treim el element de amunt de la pila i el guada a la variable elDret/Esq.
-
                 int elDret = pila.pop();
                 if (pila.isEmpty()) {
                     // res guarda el resultat de calOper,
                     // que se encarrega de transformar RPN a normal i calcula el resultat.
-                    res += elDret;
-                } else if (negatiuTrobat) {
                     res += elDret;
                 } else {
                     int elEsq = pila.pop();
@@ -175,17 +170,7 @@ public class Evaluator {
                     // que se encarrega de transformar RPN a normal i calcula el resultat.
                     res = calcOper(t,res,elEsq,elDret);
                 }
-/*
-                int elDret = pila.pop();
-                int elEsq = pila.pop();
-                // Verifica si el següent element de la pila és un número negatiu i hi ha un operador antes de aquest número
-                if (elDret < 0 && !pila.empty() && pila.peek() == -1) {
-                    pila.pop();
-                    elDret = -elDret;
-                    elEsq = -pila.pop();
-                }
-                res = calcOper(t,res,elEsq,elDret);
- */
+
                 //Realitza push a la pila del valor resultat
                 pila.push(res);
             }
