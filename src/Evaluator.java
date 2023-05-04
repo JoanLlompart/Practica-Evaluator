@@ -80,11 +80,7 @@ public class Evaluator {
                     sortida.add(operandorStack.pop());
                 }
             }
-            // Si trobam un parentesis a la esquerra,
-            //treu el parèntesi esquerra ('(') de la pila d'operadors
 
-            // (REVISAR)
-            if (t.getTk() == '(') operandorStack.pop();
         }
     }
 
@@ -218,10 +214,6 @@ public class Evaluator {
                 //Math pow retorna un double per aixo mateix feim el cast a int
                 res = (int) Math.pow(elEsq,elDret);
                 break;
-            /*case '$':
-                res = -elDret;
-                break;
-             */
             default:
                 throw new RuntimeException("Operador no reconegut");
         }
