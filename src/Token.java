@@ -209,7 +209,7 @@ public class Token {
                 // ha estat una causa gran de error.
                 continue;
             } else {
-                throw new RuntimeException("Caracter no identificat.");
+                throw new RuntimeException("Caracter no identificat." + c);
             }
         }
         // Versio antes de optimitzar el return :
